@@ -1,5 +1,7 @@
 #!/bin/bash
 
+sed 's/^,/NULL,/; :a;s/,,/,NULL,/g;ta' titanic.csv > cleaned_titanic.csv
+
 tail -n +2 titanic.csv | \
 gawk 'BEGIN {FS=","; OFS=","} {for (i=1; i<=NF; i++) if ($i == "") $i = "NULL"; print}' | \
 gawk -F',' '$3 == 2 && $13 ~ /S/ { print }' | \
